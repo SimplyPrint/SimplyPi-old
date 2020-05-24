@@ -9,3 +9,9 @@ curl -sS https://simplyprint.dk/software/SimplyPrint-files.zip > updated_file.zi
 unzip updated_file.zip &&
 sudo rm -rf updated_file.zip &&
 sudo chmod -R 757 ../SimplyPrint
+
+cd /home/pi/SimplyPi
+../../CustomPiOS/src/update-custompios-paths
+sudo modprobe loop
+
+sudo bash -x ./build_dist SimplyPi
