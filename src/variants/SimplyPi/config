@@ -1,0 +1,2 @@
+BASE_OVERRIDE_HOSTNAME=blueberrypi
+OCTOPI_EXAMPLE_CUSTOM="Hello there"
