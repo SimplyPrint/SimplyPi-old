@@ -4,8 +4,14 @@ set -x
 source /common.sh
 install_chroot_fail_on_error_trap
 
-# install dhclient.conf and possibly other files
+# Unpack SimplyPrint files
 unpack /filesystem /
 
-#cleanup
+# Install required python packages
+yes | sudo pip install pyyaml requests python-crontab
+
+# Make sure the SimplyPrint system runs
+python /home/pi/SimplyPrint/crontab_manager.py -s > /dev/null 2>&1
+
+# Cleanup
 apt-get clean
