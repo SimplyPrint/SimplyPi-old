@@ -10,7 +10,7 @@ unzip updated_file.zip &&
 sudo rm -rf updated_file.zip &&
 sudo chmod -R 757 ../SimplyPrint
 
-cd /home/pi/SimplyPi
+cd /home/pi/SimplyPi/src
 ../../CustomPiOS/src/update-custompios-paths
 sudo modprobe loop
 
