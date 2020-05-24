@@ -48,55 +48,7 @@ You can build it by issuing the following commands::
     cd ..
     ../../CustomPiOS/src/update-custompios-paths
     sudo modprobe loop
-    sudo bash -x ./build_dist
-    
-Building SimplyPi Variants
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-SimplyPi supports building variants, which are builds with changes from the main release build. An example and other variants are available in `CustomPiOS, folder src/variants/example <https://github.com/guysoft/CustomPiOS/tree/CustomPiOS/src/variants/example>`_.
-
-docker exec -it mydistro_builder::
-
-    sudo docker exec -it mydistro_builder build [Variant]
-
-Or to build a variant inside a container::
-
-    sudo bash -x ./build_dist [Variant]
-    
-Building Using Docker
-~~~~~~~~~~~~~~~~~~~~~~
-`See Building with docker entry in wiki <https://github.com/guysoft/CustomPiOS/wiki/Building-with-Docker>`_
-    
-Building Using Vagrant
-~~~~~~~~~~~~~~~~~~~~~~
-There is a vagrant machine configuration to let build SimplyPi in case your build environment behaves differently. Unless you do extra configuration, vagrant must run as root to have nfs folder sync working.
-
-Make sure you have a version of vagrant later than 1.9!
-
-If you are using older versions of Ubuntu/Debian and not using apt-get `from the download page <https://www.vagrantup.com/downloads.html>`_.
-
-To use it::
-    
-    sudo apt-get install vagrant nfs-kernel-server virtualbox
-    sudo vagrant plugin install vagrant-nfs_guest
-    sudo modprobe nfs
-    cd ../SimplyPi
-    git clone https://github.com/SimplyPrint/SimplyPi.git    
-    cd SimplyPi/src
-    ../../CustomPiOS/src/update-custompios-paths
-    cd SimplyPi/src/vagrant
-    sudo vagrant up
-    run_vagrant_build.sh
-
-After provisioning the machine, its also possible to run a nightly build which updates from devel using::
-
-    cd SimplyPi/src/vagrant
-    run_vagrant_build.sh
-    
-To build a variant on the machine simply run::
-
-    cd src/vagrant
-    run_vagrant_build.sh [Variant]
+    sudo bash -x ./build_dist SimplyPi
     
 
 Usage

@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+cd /home/pi/SimplyPi
+git pull
+
 cd src/variants/SimplyPi/filesystem/home/pi
 
 rm -rf SimplyPrint
