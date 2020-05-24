@@ -41,7 +41,7 @@ then
 fi
 
 echo "------------------------------------------------------------------------------"
-echo "SimplyPi version    : _SIMPLYPI_VERSION"
+echo "SimplyPi version  : $_SIMPLYPI_VERSION"
 echo "OctoPrint version : $_OCTOPRINT_VERSION"
 echo "OctoPi version    : $_OCTOPI_VERSION"
 echo "------------------------------------------------------------------------------"
