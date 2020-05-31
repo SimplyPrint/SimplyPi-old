@@ -1,0 +1,8 @@
+[Unit]
+Description=SimplyPrint startup service
+
+[Service]
+ExecStart=/usr/sbin/foo-daemon
+
+[Install]
+WantedBy=multi-user.target
