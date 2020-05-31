@@ -1,6 +1,6 @@
 [Unit]
 Description=SimplyPrint startup service
 [Service]
-ExecStart=/usr/bin/simplyprint_start
+ExecStart=bash /usr/bin/simplyprint_start.sh
 [Install]
 WantedBy=multi-user.target
