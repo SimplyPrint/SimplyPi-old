@@ -8,3 +8,7 @@ if grep -q \$search \"/etc/hostname\"; then
 fi
 
 sudo python3 /home/pi/SimplyPrint/crontab_manager.py -s > /dev/null 2>&1
+
+# Install SimplyPrint OctoPrint plugin
+#/home/pi/oprint/bin/python2 -m pip --disable-pip-version-check install /home/pi/SimplyPrint/SimplyPrint-OctoPrint-Plugin.zip --no-cache-dir && \\
+#rm -rf /home/pi/SimplyPrint/SimplyPrint-OctoPrint-Plugin.zip

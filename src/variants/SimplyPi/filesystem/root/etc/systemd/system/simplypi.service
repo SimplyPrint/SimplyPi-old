@@ -1,8 +1,6 @@
 [Unit]
 Description=SimplyPrint startup service
-
 [Service]
 ExecStart=/usr/bin/simplyprint_start
-
 [Install]
 WantedBy=multi-user.target

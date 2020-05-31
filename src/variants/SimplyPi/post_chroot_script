@@ -8,14 +8,8 @@ install_chroot_fail_on_error_trap
 unpack /filesystem /
 
 # Install required python packages
-#yes | pip install pyyaml requests python-crontab
-
 wget https://bootstrap.pypa.io/get-pip.py -O - | python3
 pip3 install --ignore-installed pyyaml requests python-crontab
-
-# Install SimplyPrint OctoPrint plugin
-#/home/pi/oprint/bin/python2 -m pip --disable-pip-version-check install /home/pi/SimplyPrint/SimplyPrint-OctoPrint-Plugin.zip --no-cache-dir && \\
-#rm -rf /home/pi/SimplyPrint/SimplyPrint-OctoPrint-Plugin.zip
 
 # Cleanup
 apt-get clean
