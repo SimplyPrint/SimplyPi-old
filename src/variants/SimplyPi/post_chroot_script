@@ -5,7 +5,7 @@ source /common.sh
 install_chroot_fail_on_error_trap
 
 # Unpack SimplyPrint files
-unpack /filesystem /
+# unpack /filesystem /
 
 # Install required python packages
 wget https://bootstrap.pypa.io/get-pip.py -O - | python3
@@ -13,3 +13,5 @@ pip3 install --ignore-installed pyyaml requests python-crontab
 
 # Cleanup
 apt-get clean
+
+systemctl enable simplypi.service
