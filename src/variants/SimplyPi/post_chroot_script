@@ -15,4 +15,4 @@ pip3 install --ignore-installed pyyaml requests python-crontab
 # Cleanup
 apt-get clean
 
-systemctl enable simplypi.service
+sudo systemctl enable simplypi.service
