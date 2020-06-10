@@ -6,7 +6,7 @@ install_chroot_fail_on_error_trap
 
 # Unpack SimplyPrint files
 # unpack /filesystem /
-unpack /filesystem/root /
+unpack /filesystem /
 
 # Install required python packages
 wget https://bootstrap.pypa.io/get-pip.py -O - | python3
