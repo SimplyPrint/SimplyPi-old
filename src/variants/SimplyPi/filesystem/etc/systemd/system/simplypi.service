@@ -3,7 +3,7 @@ Description=SimplyPrint startup service
 
 [Service]
 Type=oneshot
-ExecStart=bash /usr/bin/simplyprint_start.sh
+ExecStart=bash /home/root/bin/simplyprint_start.sh
 
 [Install]
 WantedBy=multi-user.target
