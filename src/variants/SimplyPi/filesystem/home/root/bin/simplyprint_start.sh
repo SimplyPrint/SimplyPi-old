@@ -1,6 +1,8 @@
 #!/bin/sh
 
-python3 /home/pi/SimplyPrint/crontab_manager.py -s > /dev/null 2>&1
+echo "starting up simplyprint_start.sh"
+# python3 /home/pi/SimplyPrint/crontab_manager.py -s > /dev/null 2>&1
+python3 /home/pi/SimplyPrint/crontab_manager.py -s
 
 search=octopi
 if grep -q $search "/etc/hostname"; then
