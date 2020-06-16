@@ -8,9 +8,11 @@ echo "Checking if the OctoPrint plugin needs to be installed..."
 FILE=/home/pi/SimplyPrint/SimplyPrint-OctoPrint-Plugin.zip
 if test -f "$FILE"; then
   echo "OctoPrint plugin needs to be installed"
-  sudo /home/pi/oprint/bin/python2 -m pip --disable-pip-version-check install $FILE --no-cache-dir &&
-  sudo service octoprint restart
-  echo "Should have installed plugin and restarted the OctoPrint service"
+  /home/pi/oprint/bin/python2 -m pip --disable-pip-version-check install $FILE --no-cache-dir &&
+  service octoprint restart &&
+  rm -f $FILE
+
+  echo "Should have installed plugin and restarted the OctoPrint service (and cleaned up)"
 fi
 
 search=octopi
