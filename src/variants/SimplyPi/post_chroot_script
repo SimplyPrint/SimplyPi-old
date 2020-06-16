@@ -13,7 +13,7 @@ wget https://bootstrap.pypa.io/get-pip.py -O - | python3
 pip3 install --ignore-installed pyyaml requests python-crontab dbus-python
 
 # Install other required packages
-apt-get install python3-gi
+apt-get install -y python3-gi
 
 # Cleanup
 apt-get clean
