@@ -1,6 +1,7 @@
 [Unit]
 Description=SimplyPrint startup service
 After=octoprint
+After=bluetooth
 
 [Service]
 Type=oneshot
