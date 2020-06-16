@@ -10,7 +10,7 @@ chmod 755 /home/root/bin/simplyprint_start.sh
 
 # Install required python packages
 wget https://bootstrap.pypa.io/get-pip.py -O - | python3
-pip3 install --ignore-installed pyyaml requests python-crontab
+pip3 install --ignore-installed pyyaml requests python-crontab dbus-python
 
 # Cleanup
 apt-get clean
