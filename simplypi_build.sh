@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
-cd /home/pi/SimplyPi
+yes | sudo apt-get install gawk util-linux qemu-user-static git p7zip-full python3
 git pull
+cd ../
+git clone https://github.com/guysoft/CustomPiOS.git
+cd SimplyPi
 
 cd src/variants/SimplyPi/filesystem/home/pi
 
