@@ -9,6 +9,8 @@ A `Raspberry Pi <http://www.raspberrypi.org/>`_ distribution for 3D printers. It
 
 This repository contains the source script to generate the distribution out of an existing `Raspbian <http://www.raspbian.org/>`_ distro image.
 
+**DIRECT DOWNLOAD;** https://download.simplyprint.dk/SimplyPi.img
+
 
 Features
 --------
