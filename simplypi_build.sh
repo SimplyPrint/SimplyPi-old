@@ -31,7 +31,7 @@ mkdir SimplyPrint &&
   sudo rm -rf updated_file.zip &&
   sudo chmod -R 757 ../SimplyPrint
 
-cd ../../../src
+cd ../../../../../src
 ../../CustomPiOS/src/update-custompios-paths
 sudo modprobe loop
 
