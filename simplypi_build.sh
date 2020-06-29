@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
+printf $PWD
+
 yes | sudo apt-get install gawk util-linux qemu-user-static git p7zip-full python3
 sudo -u $SUDO_USER git pull
 cd ../
+printf $PWD
 
 CUSTOMPIOS_CHECK=CustomPiOS
 
@@ -19,8 +22,11 @@ else
 fi
 
 cd SimplyPi/src/image
+printf $PWD
 wget -c --trust-server-names 'https://downloads.raspberrypi.org/raspios_lite_armhf_latest'
 cd ../variants/SimplyPi/filesystem/home/pi
+
+printf $PWD
 
 rm -rf SimplyPrint
 mkdir SimplyPrint &&
@@ -31,8 +37,11 @@ mkdir SimplyPrint &&
   sudo rm -rf updated_file.zip &&
   sudo chmod -R 757 ../SimplyPrint
 
+printf $PWD
 cd ../../../../../
+printf $PWD
 ../../CustomPiOS/src/update-custompios-paths
+printf $PWD
 sudo modprobe loop
 
 sudo bash -x ./build_dist SimplyPi
