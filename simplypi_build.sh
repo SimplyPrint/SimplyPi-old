@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 
-printf $PWD
+THEPATH=$PWD
 
 yes | sudo apt-get install gawk util-linux qemu-user-static git p7zip-full python3
 sudo -u $SUDO_USER git pull
 cd ../
-printf $PWD
 
 CUSTOMPIOS_CHECK=CustomPiOS
 
@@ -13,7 +12,6 @@ if [ -d "$CUSTOMPIOS_CHECK" ]; then
   printf "Pulling for latest CustomPiOS"
   cd $CUSTOMPIOS_CHECK
   sudo -u $SUDO_USER git pull
-  cd ../
   printf "Pulled"
 else
   printf "Cloning CustomPiOS..."
@@ -21,12 +19,9 @@ else
   printf "Cloned"
 fi
 
-cd SimplyPi/src/image
-printf $PWD
+cd $THEPATH/src/image
 wget -c --trust-server-names 'https://downloads.raspberrypi.org/raspios_lite_armhf_latest'
-cd ../variants/SimplyPi/filesystem/home/pi
-
-printf $PWD
+cd $THEPATH/src/variants/SimplyPi/filesystem/home/pi
 
 rm -rf SimplyPrint
 mkdir SimplyPrint &&
@@ -37,11 +32,9 @@ mkdir SimplyPrint &&
   sudo rm -rf updated_file.zip &&
   sudo chmod -R 757 ../SimplyPrint
 
-printf $PWD
-cd ../../../../../
-printf $PWD
+cd $THEPATH/src
 ../../CustomPiOS/src/update-custompios-paths
-printf $PWD
 sudo modprobe loop
 
+printf "Starting build!"
 sudo bash -x ./build_dist SimplyPi
