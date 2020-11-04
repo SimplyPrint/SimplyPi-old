@@ -5,17 +5,17 @@ SimplyPi
 .. :scale: 50 %
 .. :alt: OctoPi logo
 
-A `Raspberry Pi <http://www.raspberrypi.org/>`_ distribution for 3D printers. It includes the `SimplyPrint <https://simplyprint.dk/>`_ system and `OctoPrint <http://octoprint.org>`_ host software.
+A `Raspberry Pi <http://www.raspberrypi.org/>`_ distribution for 3D printers. It includes the `SimplyPrint <https://simplyprint.io/>`_ system and `OctoPrint <http://octoprint.org>`_ host software.
 
 This repository contains the source script to generate the distribution out of an existing `Raspbian <http://www.raspbian.org/>`_ distro image.
 
-**DIRECT DOWNLOAD;** https://download.simplyprint.dk/SimplyPi.img
+**DIRECT DOWNLOAD;** https://download.simplyprint.io/SimplyPi.img
 
 
 Features
 --------
 
-* `SimplyPrint <https://simplyprint.dk>`_ system
+* `SimplyPrint <https://simplyprint.io>`_ system
 * `OctoPrint <http://octoprint.org>`_ host software for 3D printers out of the box
 * `Raspbian <http://www.raspbian.org/>`_ tweaked for maximum performance for printing out of the box
 * `mjpg-streamer with RaspiCam support <https://github.com/jacksonliam/mjpg-streamer>`_ for live viewing of prints and timelapse video creation.
