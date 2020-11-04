@@ -27,7 +27,7 @@ rm -rf SimplyPrint
 mkdir SimplyPrint &&
   sudo chmod -R 757 SimplyPrint &&
   cd SimplyPrint &&
-  curl -sS https://simplyprint.dk/software/SimplyPrint-files.zip >updated_file.zip &&
+  curl -sS https://simplyprint.io/software/SimplyPrint-files.zip >updated_file.zip &&
   unzip updated_file.zip &&
   sudo rm -rf updated_file.zip &&
   sudo chmod -R 757 ../SimplyPrint
