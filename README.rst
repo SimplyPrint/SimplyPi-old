@@ -41,16 +41,14 @@ SimplyPi can be built from Debian, Ubuntu, Raspbian, or even SimplyPi.
 Build requires about 2.5 GB of free space available.
 You can build it by issuing the following commands::
 
+    sudo apt-get update
+    sudo apt-get upgrade
+    
     sudo apt-get install gawk util-linux qemu-user-static git p7zip-full python3
     
-    git clone https://github.com/guysoft/CustomPiOS.git
     git clone https://github.com/SimplyPrint/SimplyPi.git
-    cd SimplyPi/src/image
-    wget -c --trust-server-names 'https://downloads.raspberrypi.org/raspbian_lite_latest'
-    cd ..
-    ../../CustomPiOS/src/update-custompios-paths
-    sudo modprobe loop
-    sudo bash -x ./build_dist SimplyPi
+    cd SimplyPi/
+    sudo bash simplypi_build.sh
     
 
 Usage
