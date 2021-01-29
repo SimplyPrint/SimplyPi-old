@@ -21,11 +21,6 @@ fi
 
 cd $THEPATH/src/image
 wget -c --trust-server-names 'https://downloads.raspberrypi.org/raspios_lite_armhf_latest'
-cd $THEPATH/src/variants/SimplyPi/filesystem/home/pi
-
-# Download plugin here
-wget -O SimplyPrint-OctoPrint-Plugin.zip  https://github.com/SimplyPrint/OctoPrint-SimplyPrint/archive/master.zip
-
 cd $THEPATH/src
 ../../CustomPiOS/src/update-custompios-paths
 sudo modprobe loop
