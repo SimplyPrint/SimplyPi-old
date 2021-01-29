@@ -11,11 +11,18 @@ export LC_ALL=C
 
 source /common.sh
 
+if [ -n "$OCTOPI_APTMIRROR" ]; 
+then
+    echo "Switching apt mirror in /etc/apt/sources.list to $OCTOPI_APTMIRROR"
+    cp /etc/apt/sources.list /etc/apt/sources.list.backup
+    sed -i "s@http://raspbian.raspberrypi.org/raspbian/@$OCTOPI_APTMIRROR@g" /etc/apt/sources.list
+fi
+
 WEBCAM_USER=webcam
 
 ### Script ####
 
-unpack /filesystem/home/pi /home/pi pi
+unpack /filesystem/home/pi /home/"${BASE_USER}" "${BASE_USER}"
 unpack /filesystem/home/root /root root
 unpack /filesystem/boot /boot
 apt-get update
@@ -26,32 +33,22 @@ echo "removing:" $remove_extra
 apt-get remove -y --purge  $remove_extra
 apt-get autoremove -y
 
-apt-get -y --force-yes install python2.7 python-virtualenv python-dev git screen subversion cmake checkinstall avahi-daemon libavahi-compat-libdnssd1 libffi-dev libssl-dev
+apt-get -y --force-yes install python3 python3-virtualenv python3-dev git screen subversion cmake avahi-daemon libavahi-compat-libdnssd1 libffi-dev libssl-dev libatlas3-base
 
 echo " - Reinstall iputils-ping"
 apt-get install --reinstall iputils-ping
 
-pushd /home/pi
+pushd /home/"${BASE_USER}"
 
   # build virtualenv
-  # uncomment when setup tools issue has been fixed
-  # sudo -u pi virtualenv oprint
-  # sudo -u pi /home/pi/oprint/bin/pip install --upgrade pip
+  sudo -u "${BASE_USER}" python3 -m virtualenv --python=python3 oprint
+  sudo -u "${BASE_USER}" /home/"${BASE_USER}"/oprint/bin/pip install --upgrade pip
 
-  sudo -u pi virtualenv --no-setuptools oprint
-  sudo -u pi /home/pi/oprint/bin/pip install --upgrade pip
-  sudo -u pi /home/pi/oprint/bin/pip install "setuptools<45"
-
-  # OctoPrint & pyserial
+  # OctoPrint
   if [ "$OCTOPI_INCLUDE_OCTOPRINT" == "yes" ]
   then
     echo "--- Installing OctoPrint"
-
-    #pybonjour (for mdns discovery)
-    sudo -u pi /home/pi/oprint/bin/pip install $OCTOPI_PYBONJOUR_ARCHIVE
-
-    #OctoPrint
-    PIP_DEFAULT_TIMEOUT=60 sudo -u pi /home/pi/oprint/bin/pip install $OCTOPI_OCTOPRINT_ARCHIVE
+    PIP_DEFAULT_TIMEOUT=60 sudo -u "${BASE_USER}" /home/"${BASE_USER}"/oprint/bin/pip install $OCTOPI_OCTOPRINT_ARCHIVE
   fi
 
   #mjpg-streamer
@@ -73,17 +70,17 @@ pushd /home/pi
       # To apply -j option, we have to unwrap it.
       MJPG_STREAMER_BUILD_DIR=_build
       [ -d ${MJPG_STREAMER_BUILD_DIR} ] || (mkdir ${MJPG_STREAMER_BUILD_DIR} && \
-        chown pi:pi ${MJPG_STREAMER_BUILD_DIR})
+        chown "${BASE_USER}:${BASE_USER}" ${MJPG_STREAMER_BUILD_DIR})
       [ -f ${MJPG_STREAMER_BUILD_DIR}/Makefile ] || (cd ${MJPG_STREAMER_BUILD_DIR} && \
-        sudo -u pi cmake -DCMAKE${MJPG_STREAMER_BUILD_DIR}_TYPE=Release ..)
+        sudo -u "${BASE_USER}" cmake -DCMAKE${MJPG_STREAMER_BUILD_DIR}_TYPE=Release ..)
 
-      sudo -u pi make -j $(nproc) -C ${MJPG_STREAMER_BUILD_DIR}
+      sudo -u "${BASE_USER}" make -j $(nproc) -C ${MJPG_STREAMER_BUILD_DIR}
 
-      sudo -u pi cp ${MJPG_STREAMER_BUILD_DIR}/mjpg_streamer .
-      sudo -u pi find ${MJPG_STREAMER_BUILD_DIR} -name "*.so" -type f -exec cp {} . \;
+      sudo -u "${BASE_USER}" cp ${MJPG_STREAMER_BUILD_DIR}/mjpg_streamer .
+      sudo -u "${BASE_USER}" find ${MJPG_STREAMER_BUILD_DIR} -name "*.so" -type f -exec cp {} . \;
 
       # create our custom web folder and add a minimal index.html to it
-      sudo -u pi mkdir www-octopi
+      sudo -u "${BASE_USER}" mkdir www-octopi
       pushd www-octopi
         cat <<EOT >> index.html
 <html>
@@ -116,13 +113,13 @@ EOT
     folder=CuraEngine-$OCTOPI_CURAENGINE_VERSION
     zipfile=$folder.zip
     apt-get -y install gcc-4.9 g++-4.9
-    sudo -u pi wget -O$zipfile $OCTOPI_CURAENGINE_ARCHIVE
-    sudo -u pi unzip $zipfile
+    sudo -u "${BASE_USER}" wget -O$zipfile $OCTOPI_CURAENGINE_ARCHIVE
+    sudo -u "${BASE_USER}" unzip $zipfile
     pushd $folder
-      sudo -u pi make -j$(nproc) CXX=g++-4.9 VERSION=$OCTOPI_CURAENGINE_VERSION
+      sudo -u "${BASE_USER}" make -j$(nproc) CXX=g++-4.9 VERSION=$OCTOPI_CURAENGINE_VERSION
       cp build/CuraEngine /usr/local/bin/cura_engine
     popd
-    sudo -u pi rm -r $folder $zipfile
+    sudo -u "${BASE_USER}" rm -r $folder $zipfile
   fi
 
   #setup haproxy for http and https, and webcam
@@ -136,7 +133,7 @@ EOT
   if [ "$OCTOPI_INCLUDE_WIRINGPI" == "yes" ]
   then
     echo "--- Installing WiringPi"
-    apt-get install wiringpi
+    apt-get -y install wiringpi
   fi
 
   # fetch current yq build and install to /usr/local/bin
@@ -144,9 +141,9 @@ EOT
   
 popd
 
-#Make sure user pi has access to serial ports
-usermod -a -G tty pi
-usermod -a -G dialout pi
+#Make sure user pi / ${BASE_USER} has access to serial ports
+usermod -a -G tty "${BASE_USER}"
+usermod -a -G dialout "${BASE_USER}"
 
 # store octopi commit used to build this image
 echo "$OCTOPI_COMMIT" > /etc/octopi_commit
@@ -154,9 +151,9 @@ echo "$OCTOPI_COMMIT" > /etc/octopi_commit
 # Keep legacy compatibility
 ln -s /etc/custompios_buildbase /etc/octopi_buildbase
 
-# allow pi user to run shutdown and service commands
-echo "pi ALL=NOPASSWD: /sbin/shutdown" > /etc/sudoers.d/octoprint-shutdown
-echo "pi ALL=NOPASSWD: /usr/sbin/service" > /etc/sudoers.d/octoprint-service
+# allow pi / ${BASE_USER} user to run shutdown and service commands
+echo "${BASE_USER} ALL=NOPASSWD: /sbin/shutdown" > /etc/sudoers.d/octoprint-shutdown
+echo "${BASE_USER} ALL=NOPASSWD: /usr/sbin/service" > /etc/sudoers.d/octoprint-service
 
 #make sure users don't run git with sudo, thus breaking permissions, by adding /root/bin to the
 #default sudo path and placing a git wrapper script there that checks if it's run as root
@@ -194,8 +191,8 @@ EOT
 
 echo 'exit 0' >> /etc/rc.local
 
-# add a longer welcome text to ~pi/.bashrc
-echo "source /home/pi/scripts/welcome" >> /home/pi/.bashrc
+# add a longer welcome text to ~pi/.bashrc / ~${BASE_USER}/.bashrc
+echo "source /home/${BASE_USER}/scripts/welcome" >> /home/${BASE_USER}/.bashrc
 
 #unpack root in the end, so etc file are not overwritten, might need to add two roots int he future
 unpack /filesystem/root /
@@ -214,11 +211,10 @@ update-rc.d change_hostname defaults
 
 if [ "$OCTOPI_INCLUDE_OCTOPRINT" == "yes" ]
 then
-  update-rc.d octoprint defaults 95
+  systemctl_if_exists enable octoprint.service
 else
   # let's remove the configs for system services we don't need
-  rm /etc/init.d/octoprint
-  rm /etc/default/octoprint
+  rm /etc/systemd/system/octoprint.service
 fi
 
 ### haproxy
@@ -232,7 +228,7 @@ else
 
   # also we need to make OctoPrint bind to all interfaces because otherwise
   # it will be unaccessible...
-  [ -f /etc/default/octoprint ] && sed -i "s@HOST=127.0.0.1@HOST=0.0.0.0@" /etc/default/octoprint 
+  [ -f /etc/systemd/system/octoprint.service ] && sed -i "s@HOST=127.0.0.1@HOST=0.0.0.0@" /etc/systemd/system/octoprint.service
 fi
 
 ### CuraEngine
@@ -240,7 +236,7 @@ fi
 if [ ! "$OCTOPI_INCLUDE_CURAENGINE" == "yes" ]
 then
   # unconfigure the cura engine path in octoprint's config.yaml
-  sudo -u pi sed -i -e "s@cura_engine: /usr/local/bin/cura_engine@cura_engine:@g" /home/pi/.octoprint/config.yaml
+  sudo -u "${BASE_USER}" sed -i -e "s@cura_engine: /usr/local/bin/cura_engine@cura_engine:@g" /home/"${BASE_USER}"/.octoprint/config.yaml
 fi
 
 ### Streamer select service.
@@ -255,7 +251,6 @@ then
 else
   rm /etc/logrotate.d/webcamd
   rm /etc/systemd/system/webcamd.service
-  rm /etc/default/webcamd
   rm /root/bin/webcamd
 fi
 
@@ -266,3 +261,9 @@ systemctl_if_exists enable ffmpeg_hls.service
 #cleanup
 apt-get clean
 apt-get autoremove -y
+
+if [ -n "$OCTOPI_APTMIRROR" ]; 
+then
+    echo "Reverting /etc/apt/sources.list"
+    mv /etc/apt/sources.list.backup /etc/apt/sources.list
+fi

@@ -15,7 +15,7 @@ MJPGSTREAMER_HOME=/home/pi/mjpg-streamer
 MJPGSTREAMER_INPUT_USB="input_uvc.so"
 MJPGSTREAMER_INPUT_RASPICAM="input_raspicam.so"
 
-brokenfps_usb_devices=("046d:082b" "1908:2310" "0458:708c" "1e4e:0102" "0471:0311" "038f:6001")
+brokenfps_usb_devices=("046d:082b" "1908:2310" "0458:708c" "0458:6006" "1e4e:0102" "0471:0311" "038f:6001" "046d:0804" "046d:0825" "046d:0994" "0ac8:3450")
 
 config_dir="/boot/octopi.conf.d"
 
@@ -46,7 +46,7 @@ for cfg_file in ${cfg_files[@]}; do
   camera_usb_options="-r 640x480 -f 10"
   camera_raspi_options="-fps 10"
   camera_http_webroot="./www-octopi"
-  camera_http_options="-n"
+  camera_http_options="-n --listen 127.0.0.1"
   additional_brokenfps_usb_devices=()
 
   if [[ -e ${cfg_file} ]]; then
