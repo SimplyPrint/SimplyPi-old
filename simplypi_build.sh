@@ -25,6 +25,12 @@ DWNLDURL="https://downloads.raspberrypi.org/raspios_lite_armhf_latest"
 NEWPIOS=$(curl -s -v -X HEAD $DWNLDURL 2>&1 | grep 'location:')
 NEWPIOS="${NEWPIOS##*/}"
 
+echo
+echo "----- image download -----"
+echo
+echo "RaspiOS name; $NEWPIOS"
+echo
+
 if test -f "$NEWPIOS"; then
   echo "Latest RaspiOS file not fond - downloading newest..."
   find . -name "*.zip" -type f -delete
@@ -32,6 +38,10 @@ if test -f "$NEWPIOS"; then
 else
   echo "Got latest RaspiOS file - no need to download anew"
 fi
+
+echo
+echo "/----- image download -----\\"
+echo
 
 cd $THEPATH/src
 ../../CustomPiOS/src/update-custompios-paths
