@@ -31,7 +31,7 @@ echo
 echo "RaspiOS name; $NEWPIOS"
 echo
 
-if test -f "$NEWPIOS"; then
+if test ! -f "$NEWPIOS"; then
   echo "Latest RaspiOS file not fond - downloading newest..."
   find . -name "*.zip" -type f -delete
   wget -c --trust-server-names "$DWNLDURL"
