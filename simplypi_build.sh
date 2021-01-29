@@ -20,7 +20,19 @@ else
 fi
 
 cd $THEPATH/src/image
-wget -c --trust-server-names 'https://downloads.raspberrypi.org/raspios_lite_armhf_latest'
+# Check if we should download the new RaspiOS file
+DWNLDURL="https://downloads.raspberrypi.org/raspios_lite_armhf_latest"
+NEWPIOS=$(curl -s -v -X HEAD $DWNLDURL 2>&1 | grep 'location:')
+NEWPIOS="${NEWPIOS##*/}"
+
+if test -f "$NEWPIOS"; then
+  echo "Latest RaspiOS file not fond - downloading newest..."
+  find . -name "*.zip" -type f -delete
+  wget -c --trust-server-names "$DWNLDURL"
+else
+  echo "Got latest RaspiOS file - no need to download anew"
+fi
+
 cd $THEPATH/src
 ../../CustomPiOS/src/update-custompios-paths
 sudo modprobe loop
