@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-sudo -u pi /home/pi/oprint/bin/pip install https://github.com/SimplyPrint/OctoPrint-SimplyPrint/archive/master.zip
