@@ -8,7 +8,8 @@ install_chroot_fail_on_error_trap
 unpack /filesystem /
 
 # Install latest SimplyPrint plugin
-sudo -u pi /home/pi/oprint/bin/pip install https://github.com/SimplyPrint/OctoPrint-SimplyPrint/archive/master.zip
+sudo -u pi /home/pi/oprint/bin/pip install https://github.com/SimplyPrint/OctoPrint-SimplyPrint/archive/master.zip &&
+  /home/pi/oprint/bin/pip python -m simplyprint_raspberry install
 
 # Cleanup
 apt-get clean
