@@ -44,7 +44,7 @@ jobs:
       run: |
         sudo modprobe loop
         cd repository/src
-        sudo bash -x ./build_dist
+        sudo bash -x ./build_dist SimplyPi
 
     - name: Copy output
       id: copy
