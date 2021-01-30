@@ -44,7 +44,7 @@ jobs:
       run: |
         sudo modprobe loop
         cd repository/src
-        sudo bash -x ./build_dist
+        sudo bash -x ./build_dist SimplyPi
 
     - name: Copy output
       id: copy
@@ -53,13 +53,13 @@ jobs:
         NOW=$(date +"%Y-%m-%d-%H%M")
         IMAGE=$NOW-octopi-$DIST_VERSION
 
-        cp repository/src/workspace/*.img $IMAGE.img
+        cp repository/src/workspace-SimplyPi/*.img $IMAGE.img
 
         echo "::set-output name=image::$IMAGE"
 
     # artifact upload will take care of zipping for us
     - uses: actions/upload-artifact@v1
-      if: github.event_name == 'schedule'
+      #if: github.event_name == 'schedule'
       with:
         name: ${{ steps.copy.outputs.image }}
         path: ${{ steps.copy.outputs.image }}.img
