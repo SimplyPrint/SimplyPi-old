@@ -9,6 +9,7 @@ plugins:
     publicPort: 80
   SimplyPrint:
     sp_local_installed: true
+    from_image: true
 server:
   commands:
     systemShutdownCommand: sudo shutdown -h now
