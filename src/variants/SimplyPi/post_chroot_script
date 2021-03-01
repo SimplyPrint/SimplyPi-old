@@ -10,7 +10,8 @@ unpack /filesystem /
 sudo chmod 757 /home/pi
 
 # Install latest SimplyPrint plugin
-sudo -u pi /home/pi/oprint/bin/pip install https://github.com/SimplyPrint/OctoPrint-SimplyPrint/archive/master.zip &&
+# sudo -u pi /home/pi/oprint/bin/pip install https://github.com/SimplyPrint/OctoPrint-SimplyPrint/archive/master.zip &&
+sudo -u pi /home/pi/oprint/bin/pip install https://github.com/cp2004/OctoPrint-SimplyPrint/archive/master.zip &&
   sudo -u pi /home/pi/oprint/bin/python -m simplyprint_raspberry partial_install
 
 # Cleanup
