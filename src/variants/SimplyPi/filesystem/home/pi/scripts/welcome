@@ -5,11 +5,11 @@ _IP=$(hostname -I)
 _OCTOPRINT_VERSION=$(/home/pi/oprint/bin/python -c "from octoprint._version import get_versions; print(get_versions()['version'])" || echo "unknown")
 _OCTOPI_VERSION=$(cat /etc/octopi_version || echo "unknown")
 #_SIMPLYPI_VERSION=$(cat /etc/octopi_version || echo "unknown")
-_SIMPLYPI_VERSION="0.2"
+_SIMPLYPI_VERSION="1.0.0"
 
 echo
 echo "------------------------------------------------------------------------------"
-echo " ~ SimplyPi image ~"
+echo " ~ SimplyPi image v$_SIMPLYPI_VERSION ~"
 echo "Access OctoPrint from a web browser on your network by navigating to any of:"
 echo
 
