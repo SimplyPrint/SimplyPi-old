@@ -1,4 +1,4 @@
-SimplyPi
+SimplyPi - old repository! Find the latest version based on CustoPiZer here; https://github.com/SimplyPrint/SimplyPi
 ======
 
 .. image:: https://raw.githubusercontent.com/guysoft/OctoPi/devel/media/OctoPi.png
